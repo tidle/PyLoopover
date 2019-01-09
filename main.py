@@ -106,16 +106,16 @@ class Board:
 		return True
 	def start_time(self):
 		print("time has started")
-		self.start_t = time.clock()
+		self.start_t = time.monotonic()
 		self.game = True
 		return self.start_time
 	def end_time(self):
 		print("time has ended")
-		self.end_t = time.clock()
+		self.end_t = time.monotonic()
 		return self.end_time
 	def get_time(self):
 		if (not self.is_solved()) and self.game:
-			return (time.clock() - self.start_t , BLACK)
+			return (time.monotonic() - self.start_t , BLACK)
 		elif self.is_solved() and self.game:
 			return (self.end_t - self.start_t , GREEN)
 		else:
@@ -156,7 +156,7 @@ def main():
 			screen.blit(text_moves,(0,height+(stats_height/2)))
 			#draw board
 			gameboard.draw(screen,font)
-			
+
 			#update da screeeeeen
 			pygame.display.update()
 
