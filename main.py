@@ -1,17 +1,19 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import pygame
 import random
 import time
+import config
 
 ##VARIABLES TO CHANGE
-width = 500
-height = 500
-stats_height = 150
-board_size = 5
-window_name = "PyLoopover "+str(board_size)+"x"+str(board_size)
+version = "0.1"
+width = config.width
+height = config.height
+stats_height = config.stats_height
+board_size = config.board_size
+window_name = config.window_name.format(version=version,size=board_size)
 scramble_turns = 50
-t_round = 3
-FPS = 30
+t_round = config.timer_accuracy
+FPS = config.FPS
 
 ##DONT CHANGE THESE BOIS
 WHITE = (255,255,255)
