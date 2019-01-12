@@ -5,7 +5,7 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "0.1"
+version = "0.1+"
 width = config.width
 height = config.height
 stats_height = config.stats_height
@@ -26,7 +26,10 @@ class Tile:
 	def __init__(self,number,s):
 		self.number = number
 		n = number-1
-		self.color = ((n/s)*(255/s),(n%s)*(255/s),128)
+		red = int(n/s) * (255/s)
+		blu = (200) - int(n/s) * (200/s)
+		gre = (n%s) * (255/s)
+		self.color = (red,gre,blu)
 	def draw(self,screen,font,x,y,width,height):
 		pygame.draw.rect(screen,self.color,(x,y,width,height))
 		text = font.render(str(self.number),True,BLACK)
