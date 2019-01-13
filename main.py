@@ -26,9 +26,9 @@ class Tile:
 	def __init__(self,number,s):
 		self.number = number
 		n = number-1
-		red = int(n/s) * (255/s)
-		blu = (200) - int(n/s) * (200/s)
-		gre = (n%s) * (255/s)
+		red = int(n%s) * (250/s)
+		blu = 150 - int(n%s) * (100/s)
+		gre = int(n/s) * (250/s)
 		self.color = (red,gre,blu)
 	def draw(self,screen,font,x,y,width,height):
 		pygame.draw.rect(screen,self.color,(x,y,width,height))
