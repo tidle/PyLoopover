@@ -20,7 +20,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREEN = (32,200,32)
 keys = {"w":0,"a":0,"s":0,"d":0,"q":0}
-last_was_Q = False
+mouse = {"state":[False,False,False],"sticky":[0,0]}
 
 class Tile:
 	def __init__(self,number,s):
@@ -126,7 +126,13 @@ class Board:
 		else:
 			return (0 , BLACK)
 
+def mouse_to_tile(x,y,w,h,s):
+	xx = int(x/(w/s))
+	yy = int(y/(h/s))
+	return (xx,yy)
+
 def main():
+	last_was_Q = False
 	gameboard = Board(board_size)
 	pygame.init()
 	pygame.mixer.quit() #weird workaroud
@@ -140,6 +146,8 @@ def main():
 	pygame.event.set_allowed(pygame.USEREVENT+1) #timer event
 	pygame.event.set_allowed(pygame.KEYDOWN)
 	pygame.event.set_allowed(pygame.QUIT) #4 quitters
+	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
+	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)  #mouse stuff
 	#setup fonts
 	font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
 	font2 = pygame.font.SysFont('mono',int(stats_height/2.3))
@@ -162,6 +170,21 @@ def main():
 			#draw board
 			gameboard.draw(screen,font)
 
+			#draggy stuff
+			m = mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)
+			if m != mouse["sticky"] and mouse["state"][0]:
+				if m[0] > mouse["sticky"][0] and m[1] == mouse["sticky"][1]:
+					gameboard.rotate_left(m[1])
+				if m[0] < mouse["sticky"][0] and m[1] == mouse["sticky"][1]:
+					gameboard.rotate_right(m[1])
+				if m[1] > mouse["sticky"][1] and m[0] == mouse["sticky"][0]:
+					gameboard.rotate_down(m[0])
+				if m[1] < mouse["sticky"][1] and m[0] == mouse["sticky"][0]:
+					gameboard.rotate_up(m[0])
+				mouse["sticky"] = m
+				if last_was_Q:
+					gameboard.start_time()
+					last_was_Q = False
 			#update da screeeeeen
 			pygame.display.update()
 
@@ -189,6 +212,11 @@ def main():
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
+		elif event.type == pygame.MOUSEBUTTONDOWN:
+			mouse["state"] = pygame.mouse.get_pressed()
+			mouse["sticky"] = mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)
+		elif event.type == pygame.MOUSEBUTTONUP:
+			mouse["state"] = pygame.mouse.get_pressed()
 		#for quitters
 		elif event.type == pygame.QUIT:
 			print("Quitting...")
