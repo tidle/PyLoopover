@@ -5,7 +5,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 - Move counter
 - Colorfull!
 ## Controlls
-1. Move your mouse over a square, and then use W to move it up, A to move it left, S to move it down, or Dto move it right
+1. Move your mouse over a square, and then use W to move it up, A to move it left, S to move it down, or D to move it right
 2. Just click and drag with the mouse
 ## Running
 ### Linux
