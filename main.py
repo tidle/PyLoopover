@@ -5,7 +5,7 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "0.1+"
+version = "0.2"
 width = config.width
 height = config.height
 stats_height = config.stats_height
