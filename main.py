@@ -209,7 +209,7 @@ def main():
 				"a":"gameboard.rotate_right(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[1])",
 				"s":"gameboard.rotate_down(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[0])",
 				"d":"gameboard.rotate_left(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[1])",
-				"q":"gameboard.scramble(scramble_turns)",
+				"q":"gameboard.scramble(scramble_turns)"
 			} #i guess?
 			if k in ['w','a','s','d','q']:
 				#starting game logic
