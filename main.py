@@ -5,12 +5,12 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "0.2"
+version = "0.3"
 width = config.width
 height = config.height
 stats_height = config.stats_height
-board_size = config.board_size
-window_name = config.window_name.format(version=version,size=board_size)
+board_size = config.default_board_size
+window_name = config.window_name.format(version=version)
 scramble_turns = 50
 t_round = config.timer_accuracy
 FPS = config.FPS
@@ -31,6 +31,10 @@ class Tile:
 		gre = int(n/s) * (250/s)
 		self.color = (red,gre,blu)
 	def draw(self,screen,font,x,y,width,height):
+		if width / config.width != width // config.width:
+			width += 1
+		if height / config.height != height // config.height:
+			height += 1
 		pygame.draw.rect(screen,self.color,(x,y,width,height))
 		text = font.render(str(self.number),True,BLACK)
 		screen.blit(text,(x,y))
@@ -127,11 +131,17 @@ class Board:
 			return (0 , BLACK)
 
 def mouse_to_tile(x,y,w,h,s):
+	global board_size
 	xx = int(x/(w/s))
 	yy = int(y/(h/s))
+	if xx >= board_size:
+		xx = board_size-1
+	if yy >= board_size:
+		yy = board_size-1
 	return (xx,yy)
 
 def main():
+	global board_size
 	last_was_Q = False
 	gameboard = Board(board_size)
 	pygame.init()
@@ -167,6 +177,7 @@ def main():
 			text_moves = font2.render("Moves:"+str(gameboard.moves),True,time[1])
 			screen.blit(text_timer,(0,height))
 			screen.blit(text_moves,(0,height+(stats_height/2)))
+
 			#draw board
 			gameboard.draw(screen,font)
 
@@ -194,11 +205,11 @@ def main():
 		elif event.type == pygame.KEYDOWN:
 			k = chr(event.key) #gimme a CHAR, not some weird integer
 			domap = {
-				"w":"gameboard.rotate_up(int(pygame.mouse.get_pos()[0]/(width/board_size)))",
-				"a":"gameboard.rotate_right(int(pygame.mouse.get_pos()[1]/(height/board_size)))",
-				"s":"gameboard.rotate_down(int(pygame.mouse.get_pos()[0]/(width/board_size)))",
-				"d":"gameboard.rotate_left(int(pygame.mouse.get_pos()[1]/(height/board_size)))",
-				"q":"gameboard.scramble(scramble_turns)"
+				"w":"gameboard.rotate_up(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[0])",
+				"a":"gameboard.rotate_right(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[1])",
+				"s":"gameboard.rotate_down(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[0])",
+				"d":"gameboard.rotate_left(mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)[1])",
+				"q":"gameboard.scramble(scramble_turns)",
 			} #i guess?
 			if k in ['w','a','s','d','q']:
 				#starting game logic
@@ -209,6 +220,16 @@ def main():
 						gameboard.start_time()
 						last_was_Q = False
 				exec(domap[k])
+			if k in ['e','r']: #change board size
+				if k == 'r' and board_size < 9:
+					cdr = 1
+				elif k == 'e' and board_size > 2:
+					cdr = -1
+				else:
+					cdr = 0
+				board_size = board_size + cdr
+				gameboard = Board(board_size)
+				font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
