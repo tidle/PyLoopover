@@ -3,6 +3,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 ## Features
 - Timer
 - Move counter
+- Average of 5 and 10 (time)
 - Colorfull!
 ## Controlls
 #### Movement
@@ -12,6 +13,20 @@ PyLoopover is an implimentation of carykh's loopover game.
 The game starts at 5x5
 - To make it larger, use R
 - To make it smaller, use E
+## Interface
+#### Board
+This is the main playing area
+#### Stats
+There is a stats area underneath the main board area.
+It contains the following items
+- **Timer** -- This shows the time since the first move.  When the board has been solved, it will turn green.
+It is in the upper left corner
+- **Move Count** -- This shows how many moves you have made.  When the board has been solved, it will turn green.
+It is in the lower left corner
+- **Average of 5** -- This shows your average time over the last 5 games.  It is orange.
+Before you have played 5 games, it says N/A.
+- **Average of 10** -- This shows your average time over the last 10 games. It is purple.
+Before you have played 10 games, it says N/A.
 ## Running
 ### Linux
 1. Make sure you have python **3** installed
@@ -22,21 +37,11 @@ The game starts at 5x5
 1. Install python 3 [here](https://www.python.org/downloads/release/python-372/)
 2. Open a command prompt
 3. Navigate to the folder that you downloaded PyLoopover to using `cd`
-4. Run `pip install pygame`
+4. Run `pip3 install pygame`
 5. Close the command prompt
-6. Open the PyLoopover folder, and double click main.py to start
-### MacOS
-1. Install python 3
-2. I have no idea how to do this on a mac.
-3. Run setup.sh, i suppose
-4. It might work
-5. No guarantees
-6. Run `python3 main.py`, and cross your fingers
-### BSD
-1. ...
-2. See Linux
+6. Open the PyLoopover folder, and double click main.py to start.
 ## High DPI
-**How to make High DPI screens display PyLoopover**
+**How to make High DPI screens display PyLoopover Properly**
 1. Open `config.py` in a text editor
 2. Find the lines that say `width=`, `height=`, and `stats_height=`
 3. Double the numbers after the =
