@@ -5,7 +5,7 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "0.3"
+version = "v0.3+"
 width = config.width
 height = config.height
 stats_height = config.stats_height
@@ -172,9 +172,9 @@ def main():
 
 			#draw stats
 			time = gameboard.get_time()
-			time_str = str( int( time[0] * (10 ** t_round) ) / (10 ** t_round) )
-			text_timer = font2.render("Time :"+time_str,True,time[1])
-			text_moves = font2.render("Moves:"+str(gameboard.moves),True,time[1])
+			time_str =  "{0:0{r_round}.{t_round}f}".format(int( time[0] * (10 ** t_round) ) / (10 ** t_round) ,t_round=t_round,r_round=1+t_round+3)
+			text_timer = font2.render(time_str,True,time[1])
+			text_moves = font2.render(str(gameboard.moves),True,time[1])
 			screen.blit(text_timer,(0,height))
 			screen.blit(text_moves,(0,height+(stats_height/2)))
 
