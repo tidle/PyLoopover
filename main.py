@@ -5,13 +5,13 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "v0.3+"
+version = "1.0"
 width = config.width
 height = config.height
 stats_height = config.stats_height
 board_size = config.default_board_size
 window_name = config.window_name.format(version=version)
-scramble_turns = 50
+scramble_turns = 100
 t_round = config.timer_accuracy
 FPS = config.FPS
 
@@ -19,6 +19,8 @@ FPS = config.FPS
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREEN = (32,200,32)
+ORANGE= (250,50,20)
+PURPLE= (220,20,250)
 keys = {"w":0,"a":0,"s":0,"d":0,"q":0}
 mouse = {"state":[False,False,False],"sticky":[0,0]}
 
@@ -140,8 +142,18 @@ def mouse_to_tile(x,y,w,h,s):
 		yy = board_size-1
 	return (xx,yy)
 
+def average(n,solves):
+	m = solves[-n:]
+	m = sorted(m)
+	m = m[1:-1] # remove outliers
+	s = 0
+	for i in m:
+		s = s + i
+	return s/(n-2)
+
 def main():
 	global board_size
+	solves = []
 	last_was_Q = False
 	gameboard = Board(board_size)
 	pygame.init()
@@ -172,11 +184,26 @@ def main():
 
 			#draw stats
 			time = gameboard.get_time()
-			time_str =  "{0:0{r_round}.{t_round}f}".format(int( time[0] * (10 ** t_round) ) / (10 ** t_round) ,t_round=t_round,r_round=1+t_round+3)
+			time_str =  "{0:0{r_round}.{t_round}f}".format(time[0],t_round=t_round,r_round=1+t_round+3)
+			ao5 = average(5,solves)
+			if len(solves) < 5:
+				ao5="N/A"
+			else:
+				ao5 = "{0:0{r_round}.{t_round}f}".format(ao5,t_round=t_round,r_round=1+t_round+3)
+			ao10 = average(10,solves)
+			if len(solves) < 10:
+				ao10="N/A"
+			else:
+				ao10 = "{0:0{r_round}.{t_round}f}".format(ao10,t_round=t_round,r_round=1+t_round+3)
+
 			text_timer = font2.render(time_str,True,time[1])
-			text_moves = font2.render(str(gameboard.moves),True,time[1])
+			text_moves = font2.render(str(gameboard.moves).zfill(3),True,time[1])
+			text_ao5   = font2.render(ao5,True,ORANGE)
+			text_ao10  = font2.render(ao10,True,PURPLE)
 			screen.blit(text_timer,(0,height))
 			screen.blit(text_moves,(0,height+(stats_height/2)))
+			screen.blit(text_ao5,(width/2,height))
+			screen.blit(text_ao10,(width/2,height+(stats_height/2)))
 
 			#draw board
 			gameboard.draw(screen,font)
@@ -202,6 +229,7 @@ def main():
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
+				solves.append(gameboard.get_time()[0])
 		elif event.type == pygame.KEYDOWN:
 			k = chr(event.key) #gimme a CHAR, not some weird integer
 			domap = {
@@ -230,9 +258,11 @@ def main():
 				board_size = board_size + cdr
 				gameboard = Board(board_size)
 				font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
+				solves = []
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
+				solves.append(gameboard.get_time()[0])
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			mouse["state"] = pygame.mouse.get_pressed()
 			mouse["sticky"] = mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)
