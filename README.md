@@ -50,6 +50,6 @@ These times are shown with the most recent at the top.
 ## High DPI
 **How to make High DPI screens display PyLoopover Properly**
 1. Open `config.py` in a text editor
-2. Find the lines that say `width=`, `height=`, and `stats_height=`
-3. Double the numbers after the =
+2. Find the lines that say `width=`, `height=`, `stats_height=`, and `stats_width`
+3. Double the numbers after the equal sign (`=`)
 4. Run main.py. The window should be the right size. (If it is still too small, double the numbers again)
