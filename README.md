@@ -4,6 +4,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 - Timer
 - Move counter
 - Average of 5 and 10 (time)
+- Time history
 - Colorfull!
 ## Controlls
 #### Movement
