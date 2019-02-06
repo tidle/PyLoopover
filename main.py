@@ -5,10 +5,11 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "1.0"
+version = "1.1"
 width = config.width
 height = config.height
 stats_height = config.stats_height
+stats_width = config.stats_width
 board_size = config.default_board_size
 window_name = config.window_name.format(version=version)
 scramble_turns = 100
@@ -160,7 +161,7 @@ def main():
 	pygame.mixer.quit() #weird workaroud
 	#name the window & size it.
 	pygame.display.set_caption(window_name)
-	screen = pygame.display.set_mode((width,height+stats_height),0,32)
+	screen = pygame.display.set_mode((width+stats_width,height+stats_height),0,32)
 	#setup framerate
 	pygame.time.set_timer(pygame.USEREVENT+1,int((1/FPS)*1000))
 	#setup event que
@@ -173,6 +174,7 @@ def main():
 	#setup fonts
 	font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
 	font2 = pygame.font.SysFont('mono',int(stats_height/2.3))
+	font3 = pygame.font.SysFont('mono',int(stats_width/6))
 	#main l00p
 	running = True
 	while running:
@@ -195,7 +197,23 @@ def main():
 				ao10="N/A"
 			else:
 				ao10 = "{0:0{r_round}.{t_round}f}".format(ao10,t_round=t_round,r_round=1+t_round+3)
-
+			#draw time history
+			b = [0] * len(solves)
+			for i in range(len(solves)):
+				b[i] = "{0:0{r_round}.{t_round}f}".format(solves[len(solves)-i-1],t_round=t_round,r_round=t_round+4)
+			for i in range(len(b)):
+				r = font3.render(b[i],True,BLACK)
+				screen.blit(r,(width,25*(i+4)))
+			#draw some info
+			info1 = font3.render("E-smaller",True,ORANGE)
+			info2 = font3.render("R-larger",True,PURPLE)
+			info3 = font3.render("Q-scramble",True,GREEN)
+			info4 = font3.render("Times:",True,BLACK)
+			screen.blit(info1,(width,0))
+			screen.blit(info2,(width,25))
+			screen.blit(info3,(width,50))
+			screen.blit(info4,(width,75))
+			#render boring stuff
 			text_timer = font2.render(time_str,True,time[1])
 			text_moves = font2.render(str(gameboard.moves).zfill(3),True,time[1])
 			text_ao5   = font2.render(ao5,True,ORANGE)
