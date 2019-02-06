@@ -13,6 +13,8 @@ PyLoopover is an implimentation of carykh's loopover game.
 The game starts at 5x5
 - To make it larger, use R
 - To make it smaller, use E
+#### Scrambling
+- To scramble, press Q
 ## Interface
 #### Board
 This is the main playing area
@@ -27,6 +29,10 @@ It is in the lower left corner
 Before you have played 5 games, it says N/A.
 - **Average of 10** -- This shows your average time over the last 10 games. It is purple.
 Before you have played 10 games, it says N/A.
+#### History and Help Area
+This is an area to the right of the board.
+It shows all of the keys, and what they do, as well as showing all of your recent times.
+These times are shown with the most recent at the top.
 ## Running
 ### Linux
 1. Make sure you have python **3** installed
