@@ -4,6 +4,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 - Timer
 - Move counter
 - Average of 5 and 10 (time)
+- Letter and number labels
 - Time history
 - Colorfull!
 ## Controlls
@@ -14,8 +15,9 @@ PyLoopover is an implimentation of carykh's loopover game.
 The game starts at 5x5
 - To make it larger, use R
 - To make it smaller, use E
-#### Scrambling
+#### Misc.
 - To scramble, press Q
+- To toggle between letter and number tile labels, press F
 ## Interface
 #### Board
 This is the main playing area
