@@ -5,7 +5,7 @@ import time
 import config
 
 ##VARIABLES TO CHANGE
-version = "1.1"
+version = "1.2"
 width = config.width
 height = config.height
 stats_height = config.stats_height
@@ -15,6 +15,7 @@ window_name = config.window_name.format(version=version)
 scramble_turns = 100
 t_round = config.timer_accuracy
 FPS = config.FPS
+tilemode = 1
 
 ##DONT CHANGE THESE BOIS
 WHITE = (255,255,255)
@@ -22,6 +23,7 @@ BLACK = (0,0,0)
 GREEN = (32,200,32)
 ORANGE= (250,50,20)
 PURPLE= (220,20,250)
+GRAY  = (50,220,190)
 keys = {"w":0,"a":0,"s":0,"d":0,"q":0}
 mouse = {"state":[False,False,False],"sticky":[0,0]}
 
@@ -33,14 +35,22 @@ class Tile:
 		blu = 150 - int(n%s) * (100/s)
 		gre = int(n/s) * (250/s)
 		self.color = (red,gre,blu)
-	def draw(self,screen,font,x,y,width,height):
+	def draw(self,screen,font,x,y,width,height,mode):
 		if width / config.width != width // config.width:
 			width += 1
 		if height / config.height != height // config.height:
 			height += 1
+		display = ""
+		if mode == 0: #numbers mode
+			display = str(self.number)
+		if mode == 1: #letters mode
+			display = chr(ord("A")+self.number-1)
 		pygame.draw.rect(screen,self.color,(x,y,width,height))
-		text = font.render(str(self.number),True,BLACK)
-		screen.blit(text,(x,y))
+		text = font.render(display,True,BLACK)
+		textrect = text.get_rect()
+		textrect.centerx = x + width/2
+		textrect.centery = y + width/2
+		screen.blit(text,textrect)
 
 class Board:
 	content = []
@@ -88,14 +98,14 @@ class Board:
 		self.moves+=1
 		return new
 
-	def draw(self,screen,font):
+	def draw(self,screen,font,mode):
 		for i in range(0,self.size):
 			for j in range(0,self.size):
 				w = (width / self.size)
 				h = (height / self.size)
 				x = i * w
 				y = j * h
-				self.content[i][j].draw(screen,font,x,y,w,h)
+				self.content[i][j].draw(screen,font,x,y,w,h,mode)
 	def scramble(self,n):
 		for i in range(0,n):
 			o = random.randint(0,3)
@@ -154,6 +164,7 @@ def average(n,solves):
 
 def main():
 	global board_size
+	global tilemode
 	solves = []
 	last_was_Q = False
 	gameboard = Board(board_size)
@@ -203,16 +214,18 @@ def main():
 				b[i] = "{0:0{r_round}.{t_round}f}".format(solves[len(solves)-i-1],t_round=t_round,r_round=t_round+4)
 			for i in range(len(b)):
 				r = font3.render(b[i],True,BLACK)
-				screen.blit(r,(width,25*(i+4)))
+				screen.blit(r,(width,25*(i+5)))
 			#draw some info
 			info1 = font3.render("E-smaller",True,ORANGE)
 			info2 = font3.render("R-larger",True,PURPLE)
 			info3 = font3.render("Q-scramble",True,GREEN)
+			info5 = font3.render("F-tilemode",True,GRAY)
 			info4 = font3.render("Times:",True,BLACK)
 			screen.blit(info1,(width,0))
 			screen.blit(info2,(width,25))
 			screen.blit(info3,(width,50))
-			screen.blit(info4,(width,75))
+			screen.blit(info5,(width,75))
+			screen.blit(info4,(width,100))
 			#render boring stuff
 			text_timer = font2.render(time_str,True,time[1])
 			text_moves = font2.render(str(gameboard.moves).zfill(3),True,time[1])
@@ -224,7 +237,10 @@ def main():
 			screen.blit(text_ao10,(width/2,height+(stats_height/2)))
 
 			#draw board
-			gameboard.draw(screen,font)
+			if board_size < 6:
+				gameboard.draw(screen,font,tilemode)
+			else:
+				gameboard.draw(screen,font,0)
 
 			#draggy stuff
 			m = mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)
@@ -277,6 +293,8 @@ def main():
 				gameboard = Board(board_size)
 				font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
 				solves = []
+			if k == 'f':
+				tilemode = 1 - tilemode
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
