@@ -184,9 +184,9 @@ def main():
 	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
 	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)  #mouse stuff
 	#setup fonts
-	font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
-	font2 = pygame.font.SysFont('mono',int(stats_height/2.3))
-	font3 = pygame.font.SysFont('mono',int(stats_width/6))
+	font = pygame.font.Font('Inconsolata-Regular.ttf',int((width/board_size)/1.14))
+	font2 = pygame.font.Font('Inconsolata-Regular.ttf',int(stats_height/2.3))
+	font3 = pygame.font.Font('Inconsolata-Regular.ttf',int(stats_width/6))
 	#main l00p
 	running = True
 	while running:
@@ -220,7 +220,7 @@ def main():
 			info1 = font3.render("E-smaller",True,ORANGE)
 			info2 = font3.render("R-larger",True,PURPLE)
 			info3 = font3.render("Q-scramble",True,GREEN)
-			info5 = font3.render("F-tilemode",True,GRAY)
+			info5 = font3.render("F-tile mode",True,GRAY)
 			info4 = font3.render("Times:",True,BLACK)
 			screen.blit(info1,(width,0))
 			screen.blit(info2,(width,25))
@@ -292,7 +292,7 @@ def main():
 					cdr = 0
 				board_size = board_size + cdr
 				gameboard = Board(board_size)
-				font = pygame.font.SysFont('mono',int((width/board_size)/1.14))
+				font = pygame.font.Font('Inconsolata-Regular.ttf',int((width/board_size)/1.14))
 				solves = []
 			if k == 'f':
 				tilemode = 1 - tilemode
