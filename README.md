@@ -19,6 +19,9 @@ The game starts at 5x5
 - To make it smaller, use E
 A smaller board size:
 <img src="./PyLoopover-03.png" width=100px />
+
+
+
 #### Misc.
 - To scramble, press Q
 - To toggle between letter and number tile labels, press F
