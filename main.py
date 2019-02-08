@@ -3,9 +3,10 @@ import pygame
 import random
 import time
 import config
+import version
 
 ##VARIABLES TO CHANGE
-version = "1.2"
+version = version.version
 width = config.width
 height = config.height
 stats_height = config.stats_height
