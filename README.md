@@ -1,6 +1,7 @@
 # PyLoopover
 PyLoopover is an implimentation of carykh's loopover game.
-<img src="./PyLoopover-02.png" width=100px>
+<br>
+<img src="./PyLoopover-02.png" width=100px />
 ## Features
 - Timer
 - Move counter
@@ -17,7 +18,7 @@ The game starts at 5x5
 - To make it larger, use R
 - To make it smaller, use E
 A smaller board size:
-<img src="./PyLoopover-03.png" width=100px>
+<img src="./PyLoopover-03.png" width=100px />
 #### Misc.
 - To scramble, press Q
 - To toggle between letter and number tile labels, press F
@@ -34,7 +35,7 @@ It is in the lower left corner
 - **Average of 5** -- This shows your average time over the last 5 games.  It is orange.
 Before you have played 5 games, it says N/A.
 The average of 5 feature:
-<img src="./PyLoopover-04.png" width=100px>
+<img src="./PyLoopover-04.png" width=100px />
 - **Average of 10** -- This shows your average time over the last 10 games. It is purple.
 Before you have played 10 games, it says N/A.
 #### History and Help Area
