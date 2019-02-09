@@ -204,11 +204,11 @@ def main():
 				ao5="N/A"
 			else:
 				ao5 = "{0:0{r_round}.{t_round}f}".format(ao5,t_round=t_round,r_round=1+t_round+3)
-			ao10 = average(10,solves)
-			if len(solves) < 10:
-				ao10="N/A"
-			else:
-				ao10 = "{0:0{r_round}.{t_round}f}".format(ao10,t_round=t_round,r_round=1+t_round+3)
+			try:
+				mps = "{0:0{r}.{t}f}".format(time[0] / gameboard.moves,r=4,t=2)
+			except ZeroDivisionError:
+				mps = "-"
+			mps = mps + "mps"
 			#draw time history
 			line_sep = stats_width/8
 			b = [0] * len(solves)
@@ -232,11 +232,11 @@ def main():
 			text_timer = font2.render(time_str,True,time[1])
 			text_moves = font2.render(str(gameboard.moves).zfill(3),True,time[1])
 			text_ao5   = font2.render(ao5,True,ORANGE)
-			text_ao10  = font2.render(ao10,True,PURPLE)
+			text_mps   = font2.render(mps,True,PURPLE)
 			screen.blit(text_timer,(0,height))
 			screen.blit(text_moves,(0,height+(stats_height/2)))
 			screen.blit(text_ao5,(width/2,height))
-			screen.blit(text_ao10,(width/2,height+(stats_height/2)))
+			screen.blit(text_mps,(width/2,height+(stats_height/2)))
 
 			#draw board
 			if board_size < 6:
