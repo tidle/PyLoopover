@@ -210,12 +210,13 @@ def main():
 			else:
 				ao10 = "{0:0{r_round}.{t_round}f}".format(ao10,t_round=t_round,r_round=1+t_round+3)
 			#draw time history
+			line_sep = stats_width/8
 			b = [0] * len(solves)
 			for i in range(len(solves)):
 				b[i] = "{0:0{r_round}.{t_round}f}".format(solves[len(solves)-i-1],t_round=t_round,r_round=t_round+4)
 			for i in range(len(b)):
 				r = font3.render(b[i],True,BLACK)
-				screen.blit(r,(width,25*(i+5)))
+				screen.blit(r,(width,line_sep*(i+5)))
 			#draw some info
 			info1 = font3.render("E-smaller",True,ORANGE)
 			info2 = font3.render("R-larger",True,PURPLE)
@@ -223,10 +224,10 @@ def main():
 			info5 = font3.render("F-tile mode",True,GRAY)
 			info4 = font3.render("Times:",True,BLACK)
 			screen.blit(info1,(width,0))
-			screen.blit(info2,(width,25))
-			screen.blit(info3,(width,50))
-			screen.blit(info5,(width,75))
-			screen.blit(info4,(width,100))
+			screen.blit(info2,(width,line_sep))
+			screen.blit(info3,(width,line_sep*2))
+			screen.blit(info5,(width,line_sep*3))
+			screen.blit(info4,(width,line_sep*4))
 			#render boring stuff
 			text_timer = font2.render(time_str,True,time[1])
 			text_moves = font2.render(str(gameboard.moves).zfill(3),True,time[1])
