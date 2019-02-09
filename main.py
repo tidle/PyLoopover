@@ -215,7 +215,10 @@ def main():
 			for i in range(len(solves)):
 				b[i] = "{0:0{r_round}.{t_round}f}".format(solves[len(solves)-i-1],t_round=t_round,r_round=t_round+4)
 			for i in range(len(b)):
-				r = font3.render(b[i],True,BLACK)
+				if i < 5:
+					r = font3.render(b[i],True,ORANGE) #visual indication that it will be included in the ao5
+				else:
+					r = font3.render(b[i],True,BLACK)
 				screen.blit(r,(width,line_sep*(i+5)))
 			#draw some info
 			info1 = font3.render("E-smaller",True,ORANGE)
