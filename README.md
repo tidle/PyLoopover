@@ -5,7 +5,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 ## Features
 - Timer
 - Move counter
-- Average of 5 and 10 (time)
+- Average of 5 (time)
 - Letter and number labels
 - Time history
 - Colorfull!
@@ -42,8 +42,7 @@ The average of 5 feature:
 <br>
 <img src="./PyLoopover-04.png" width=300px />
 
-- **Average of 10** -- This shows your average time over the last 10 games. It is purple.
-Before you have played 10 games, it says N/A.
+- **Moves per Second** -- This shows the average time between moves. If you haven't started a game yet, it will read -mps.  It is purple
 #### History and Help Area
 This is an area to the right of the board.
 It shows all of the keys, and what they do, as well as showing all of your recent times.
