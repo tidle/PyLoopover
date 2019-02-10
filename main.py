@@ -207,7 +207,7 @@ def main():
 			else:
 				ao5 = "{0:0{r_round}.{t_round}f}".format(ao5,t_round=t_round,r_round=1+t_round+3)
 			try:
-				mps = "{0:0{r}.{t}f}".format(time[0] / gameboard.moves,r=4,t=2)
+				mps = "{0:0{r}.{t}f}".format(gameboard.moves / time[0],r=4,t=2)
 			except ZeroDivisionError:
 				mps = "-"
 			mps = mps + "mps"
