@@ -7,7 +7,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 - Move counter
 - Average of 5 (time)
 - Letter and number labels
-- Time history
+- Time and move history
 - Colorfull!
 ## Controlls
 #### Movement
@@ -45,8 +45,11 @@ The average of 5 feature:
 - **Moves per Second** -- This shows the average time between moves. If you haven't started a game yet, it will read -mps.  It is purple
 #### History and Help Area
 This is an area to the right of the board.
-It shows all of the keys, and what they do, as well as showing all of your recent times.
-These times are shown with the most recent at the top.
+It shows all of the keys, and what they do, as well as showing all of your recent solves' times and move count.
+The solves are shown with the most recent at the top.
+The times that are teal are your solves with the lowest move count in this session.
+The times that are green are your solves with the fastest time in this session.
+The times that are orange are factored into your ao5
 ## Running
 ### Linux
 1. Make sure you have python **3** installed

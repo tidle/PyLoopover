@@ -156,6 +156,8 @@ def mouse_to_tile(x,y,w,h,s):
 
 def average(n,solves):
 	m = solves[-n:]
+	for i in range(len(m)):
+		m[i] = m[i][0]
 	m = sorted(m)
 	m = m[1:-1] # remove outliers
 	s = 0
@@ -209,13 +211,28 @@ def main():
 			except ZeroDivisionError:
 				mps = "-"
 			mps = mps + "mps"
-			#draw time history
+			#draw history
 			line_sep = stats_width/8
 			b = [0] * len(solves)
+			mtl = [0] * len(solves)
+			mml = [0] * len(solves)
 			for i in range(len(solves)):
-				b[i] = "{0:0{r_round}.{t_round}f}".format(solves[len(solves)-i-1],t_round=t_round,r_round=t_round+4)
+				b[i] = "{0:0{r_round}.{t_round}f}/{1:03}".format(solves[len(solves)-i-1][0],solves[len(solves)-i-1][1],t_round=t_round,r_round=t_round+4)
+			for i in range(len(solves)):
+				mtl[i] = solves[i][0]
+				mml[i] = solves[i][1]
+			try:
+				mt = min(mtl)
+				mm = min(mml)
+			except ValueError:
+				mt = 0
+				mm = 0
 			for i in range(len(b)):
-				if i < 5:
+				if solves[len(solves)-i-1][0] <= mt:
+					r = font3.render(b[i],True,GREEN)
+				elif solves[len(solves)-i-1][1] <= mm:
+					r = font3.render(b[i],True,GRAY)
+				elif i < 5:
 					r = font3.render(b[i],True,ORANGE) #visual indication that it will be included in the ao5
 				else:
 					r = font3.render(b[i],True,BLACK)
@@ -225,7 +242,7 @@ def main():
 			info2 = font3.render("R-larger",True,PURPLE)
 			info3 = font3.render("Q-scramble",True,GREEN)
 			info5 = font3.render("F-tile mode",True,GRAY)
-			info4 = font3.render("Times:",True,BLACK)
+			info4 = font3.render("History:",True,BLACK)
 			screen.blit(info1,(width,0))
 			screen.blit(info2,(width,line_sep))
 			screen.blit(info3,(width,line_sep*2))
@@ -268,7 +285,7 @@ def main():
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
-				solves.append(gameboard.get_time()[0])
+				solves.append([gameboard.get_time()[0],gameboard.moves])
 		elif event.type == pygame.KEYDOWN:
 			k = chr(event.key) #gimme a CHAR, not some weird integer
 			domap = {
@@ -303,7 +320,7 @@ def main():
 			#end the game
 			if gameboard.is_solved() and gameboard.start_t > gameboard.end_t:
 				gameboard.end_time()
-				solves.append(gameboard.get_time()[0])
+				solves.append([gameboard.get_time()[0],gameboard.moves])
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			mouse["state"] = pygame.mouse.get_pressed()
 			mouse["sticky"] = mouse_to_tile(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],width,height,board_size)
