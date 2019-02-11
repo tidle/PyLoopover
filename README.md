@@ -52,11 +52,16 @@ The times that are green are your solves with the fastest time in this session.
 The times that are orange are factored into your ao5
 ## Running
 ### Linux
-1. Make sure you have python **3** installed
-2. Make sure main.py is executable, then use `./main.py` to run it
+1. Make sure you have python **3** installed (ubuntu - `python3`)
+2. Make sure pip for python 3 is installed (ubuntu - `python3-pip`)
+3. Install pygame with pip : `pip3 install pygame`
+4. Make sure main.py is executable, then use `./main.py` to run it
 ### Windows
 1. Install python 3 [here](https://www.python.org/downloads/release/python-372/)
-2. Open the PyLoopover folder, and double click main.py to start.
+2. Open a command prompt in the PyLoopover directory
+3. Type `pip install pygame`
+4. Close the command prompt
+5. Open the PyLoopover folder, and double click main.py to start.
 ## High DPI
 **How to make High DPI screens display PyLoopover Properly**
 1. Open `config.py` in a text editor
