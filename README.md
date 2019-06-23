@@ -9,6 +9,7 @@ PyLoopover is an implimentation of carykh's loopover game.
 - Letter and number labels
 - Time and move history
 - Colorfull!
+- Dark/Light Mode!
 ## Controlls
 #### Movement
 - Move your mouse over a square, and then use W to move it up, A to move it left, S to move it down, or D to move it right
@@ -67,4 +68,13 @@ The times that are orange are factored into your ao5
 1. Open `config.py` in a text editor
 2. Find the lines that say `width=`, `height=`, `stats_height=`, and `stats_width`
 3. Double the numbers after the equal sign (`=`)
-4. Run main.py. The window should be the right size. (If it is still too small, double the numbers again)
+4. Save the file and exit
+5. Run `main.py`. The window should be the right size. (If it is still too small, double the numbers again)
+## Dark Mode
+Dark mode is turned on by default.
+If you want to turn it off, follow these steps:
+1. Open `config.py` in a text editor
+2. Find the line that says `dark=True`
+3. Change the `True` to `False` (the capitalization is important!)
+4. Save the file and exit
+5. Run `main.py`.
