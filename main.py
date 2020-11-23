@@ -244,7 +244,7 @@ def main():
                                 elif i < 5:
                                         r = font3.render(b[i],True,ORANGE) #visual indication that it will be included in the ao5
                                 else:
-                                        r = font3.render(b[i],True,BLACK)
+                                        r = font3.render(b[i],True,TX)
                                 screen.blit(r,(width,line_sep*(i+5)))
                         #draw some info
                         info1 = font3.render("E-smaller",True,ORANGE)
